@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		943A51B829F7E6F700667739 /* user_default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A51B729F7E6F700667739 /* user_default.swift */; };
 		94BE448429F69864009D6D2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE448329F69864009D6D2B /* AppDelegate.swift */; };
 		94BE448629F69864009D6D2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE448529F69864009D6D2B /* SceneDelegate.swift */; };
 		94BE448829F69864009D6D2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE448729F69864009D6D2B /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		943A51B729F7E6F700667739 /* user_default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user_default.swift; sourceTree = "<group>"; };
 		94BE448029F69864009D6D2B /* lego_map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lego_map.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BE448329F69864009D6D2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94BE448529F69864009D6D2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				94BE448C29F69867009D6D2B /* Assets.xcassets */,
 				94BE448E29F69867009D6D2B /* LaunchScreen.storyboard */,
 				94BE449129F69867009D6D2B /* Info.plist */,
+				943A51B729F7E6F700667739 /* user_default.swift */,
 			);
 			path = lego_map;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				943A51B829F7E6F700667739 /* user_default.swift in Sources */,
 				94BE448829F69864009D6D2B /* ViewController.swift in Sources */,
 				94BE448429F69864009D6D2B /* AppDelegate.swift in Sources */,
 				94BE448629F69864009D6D2B /* SceneDelegate.swift in Sources */,
