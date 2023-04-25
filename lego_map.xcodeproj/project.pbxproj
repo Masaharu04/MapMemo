@@ -13,6 +13,7 @@
 		94BE448B29F69864009D6D2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BE448929F69864009D6D2B /* Main.storyboard */; };
 		94BE448D29F69867009D6D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94BE448C29F69867009D6D2B /* Assets.xcassets */; };
 		94BE449029F69867009D6D2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BE448E29F69867009D6D2B /* LaunchScreen.storyboard */; };
+		D05FDBFD29F814C6004E151F /* MapMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FDBFC29F814C6004E151F /* MapMemoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		94BE448C29F69867009D6D2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94BE448F29F69867009D6D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94BE449129F69867009D6D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D05FDBFC29F814C6004E151F /* MapMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				94BE448329F69864009D6D2B /* AppDelegate.swift */,
 				94BE448529F69864009D6D2B /* SceneDelegate.swift */,
 				94BE448729F69864009D6D2B /* ViewController.swift */,
+				D05FDBFC29F814C6004E151F /* MapMemoViewController.swift */,
 				94BE448929F69864009D6D2B /* Main.storyboard */,
 				94BE448C29F69867009D6D2B /* Assets.xcassets */,
 				94BE448E29F69867009D6D2B /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94BE448829F69864009D6D2B /* ViewController.swift in Sources */,
+				D05FDBFD29F814C6004E151F /* MapMemoViewController.swift in Sources */,
 				94BE448429F69864009D6D2B /* AppDelegate.swift in Sources */,
 				94BE448629F69864009D6D2B /* SceneDelegate.swift in Sources */,
 			);
