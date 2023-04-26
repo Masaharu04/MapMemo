@@ -14,8 +14,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
-    var val_x :Double = 0
-    var val_y :Double = 0
+    var val_x :Double = -122.39
+    var val_y :Double = 37.768
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +51,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         print(pin.coordinate)
         mapView.addAnnotation(pin)
+        print(mapView.addAnnotation(pin))
+        //1<MKMarkerAnnotationView: 0x13c131000; frame = (0 0; 28 28); layer = <CALayer: 0x6000024f44a0>>
+        //2MKMarkerAnnotationView: 0x13e00cc00; frame = (0 0; 28 28); layer = <CALayer: 0x6000024e76a0>>
         
     }
     
