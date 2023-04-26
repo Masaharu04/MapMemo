@@ -27,13 +27,31 @@ class MapMemoViewController: UIViewController {
         
         saveData.set(titleTextField.text, forKey: "title")
         saveData.set(contentTextView.text, forKey: "content")
+        
+        //セーブボタンアラート
         let alertController = UIAlertController(title: "保存", message: "保存完了", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
-       
+        
+        //ローカル通知の設定
+        let content = UNMutableNotificationContent()
+        content.title = "メモ発見！"
+        content.body = "メモを除いてみよう"
+        content.sound = UNNotificationSound.default
+
+        // 直ぐに通知を表示
+        let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        
     }
     
+
+    
+    
+    
+}
+
   
 
     /*
@@ -46,4 +64,4 @@ class MapMemoViewController: UIViewController {
     }
     */
 
-}
+
