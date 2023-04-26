@@ -12,7 +12,7 @@ import CoreLocation
 class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
-
+    
     let locationManager = CLLocationManager()
     var val_x :Double = 0
     var val_y :Double = 0
@@ -51,7 +51,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         print(pin.coordinate)
         mapView.addAnnotation(pin)
-
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -66,8 +66,42 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
-            print("error: \(error.localizedDescription)")
+        print("error: \(error.localizedDescription)")
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation.title == "My Location"{
+            return nil
         }
-
+        
+        
+        let pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        
+        //pinView.image
+        
+        pinView.canShowCallout = true
+        
+        let button = UIButton()
+        button.frame = CGRect(x:0,y:0,width:60,height:70)
+        button.setImage(UIImage(systemName: "trash.square"), for: .normal)
+        button.tintColor = UIColor.red
+        
+        
+        pinView.rightCalloutAccessoryView = button
+        
+        print(pinView)
+        
+        return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let annotation = view.annotation else {
+            return
+        }
+        
+        self.mapView.removeAnnotation(annotation)
+    }
+    
 }
-
