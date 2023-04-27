@@ -145,7 +145,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         var dict_hash_key: [Int: String] = [:]
         let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
         for key_buf in key_data {
-            let (map_x,map_y,title,text,date) = read_userdefault(keyword: key_buf)
+            let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
             addPin(latitude: map_y, longitude: map_x)
             dict_hash_key[id_hash] = key_buf
         }
