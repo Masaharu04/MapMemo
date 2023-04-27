@@ -87,7 +87,6 @@ func delete_data(dict_hash_key: [Int: String],hash_num: Int) -> [Int: String]{
 
 
 
-
 extension UserDefaults{
     func removeAll(){
         dictionaryRepresentation().forEach {removeObject(forKey: $0.key)}
