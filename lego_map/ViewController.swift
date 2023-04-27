@@ -23,6 +23,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     var text_subtitle:String = "test2"
     var id_hash : Int = 0
     var dictionary: [Int: String] = [:]
+    var near_data :[Double:Int] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,10 +196,36 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     
     func near_locate(){
         print(pin.count)
+        var dst :Double = 0.0
+        var near_range :Double = 500.0
+
         for i in 0 ..< pin.count{
-            print(pin[i].hash)
+            //print(pin[i].coordinate.latitude)
+            dst = distance(current: (la: dinamic_y,lo:dinamic_x), target: (la: pin[i].coordinate.latitude,lo: pin[i].coordinate.longitude))
+            if dst <= near_range {
+                near_data.updateValue(pin[i].hash, forKey: dst)
+                print("近い")
+                
+            }
         }
     }
+    func distance(current: (la: Double, lo: Double), target: (la: Double, lo: Double)) -> Double {
+            
+            // 緯度経度をラジアンに変換
+            let currentLa   = current.la * Double.pi / 180
+            let currentLo   = current.lo * Double.pi / 180
+            let targetLa    = target.la * Double.pi / 180
+            let targetLo    = target.lo * Double.pi / 180
+     
+            // 赤道半径
+            let equatorRadius = 6378137.0;
+            
+            // 算出
+            let averageLat = (currentLa - targetLa) / 2
+            let averageLon = (currentLo - targetLo) / 2
+            let distance = equatorRadius * 2 * asin(sqrt(pow(sin(averageLat), 2) + cos(currentLa) * cos(targetLa) * pow(sin(averageLon), 2)))
+            return distance
+        }
    
     
     
