@@ -95,14 +95,15 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated:true)
-        let pin:[MKPointAnnotation] = pin
-        let element = MKPointAnnotation()
+        var pin:[MKPointAnnotation] = pin
+        var element = MKPointAnnotation()
         
         //let pin = MKPointAnnotation()
         element.title = text_title
         element.subtitle = text_subtitle
         element.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         //print(pin.coordinate)
+        pin.append(element)
         mapView.addAnnotation(element)
         id_hash = element.hash
         print(element.hash)
@@ -176,6 +177,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         for key_buf in key_data {
             let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
             pin = addPin(latitude: map_y, longitude: map_x,pin: pin)
+            print("aaaaaaaaaaaaaaaaaaaaaaaaa")
+            print(pin[0].coordinate.latitude)
+            print("aaaaaaaaaaaaaaaaaaaaaaaaa")
             dict_hash_key[id_hash] = key_buf
         }
         return dict_hash_key
