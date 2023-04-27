@@ -161,6 +161,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             //print(a[i].hash)
             if pin[i].hash == annotation.hash{
                 pin.remove(at: i)
+                break
             }
         }
         self.mapView.removeAnnotation(annotation)
