@@ -15,17 +15,36 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
 
     let locationManager = CLLocationManager()
     var val_x :Double = -122.38
-    var val_y :Double = 37.76
+    var val_y :Double = 37.77//37.76
     var text_title:String = "test"
     var text_subtitle:String = "test2"
     var id_hash : Int = 0
+    var dictionary: [Int: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        
+        //UserDefaults.standard.removeAll()
+        dictionary = init_load()
+        
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "", text: "", date: "")
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1002,map_x: val_x+0.02, map_y: val_y, title: "", text: "", date: "")
+        print(dictionary)
+        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+        print(load_data(dict_hash_key: dictionary,hash_num: 1001))
+        print(load_data(dict_hash_key: dictionary,hash_num: 1002))
+        dictionary = delete_data(dict_hash_key: dictionary,hash_num: 1001)
+        print(dictionary)
+        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+        
+        
+        print(dictionary)
     }
     
     @IBAction func touchpin(){
@@ -119,5 +138,20 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             print(annotation.hash)
         }
     }
+    
+//------- user_default and ViewController--------
+    
+    func init_load() -> [Int: String]{
+        var dict_hash_key: [Int: String] = [:]
+        let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
+        for key_buf in key_data {
+            let (map_x,map_y,title,text,date) = read_userdefault(keyword: key_buf)
+            addPin(latitude: map_y, longitude: map_x)
+            dict_hash_key[id_hash] = key_buf
+        }
+        return dict_hash_key
+    }
+    
+    
 
 }
