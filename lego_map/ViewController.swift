@@ -37,19 +37,23 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         //UserDefaults.standard.removeAll()
         dictionary = init_load()
         
-        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
-        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "", text: "", date: "")
-        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1002,map_x: val_x+0.02, map_y: val_y, title: "", text: "", date: "")
+//        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
+ //       dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "", text: "", date: "")
+//        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1002,map_x: val_x+0.02, map_y: val_y, title: "", text: "", date: "")
         print(dictionary)
-        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
-        print(load_data(dict_hash_key: dictionary,hash_num: 1001))
-        print(load_data(dict_hash_key: dictionary,hash_num: 1002))
-        dictionary = delete_data(dict_hash_key: dictionary,hash_num: 1001)
-        print(dictionary)
-        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+        print(read_userdefault(keyword: "0"))
+        print(read_userdefault(keyword: "2"))
+        print(pin[0].coordinate.longitude)
+        print(pin[1])
+//        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+//        print(load_data(dict_hash_key: dictionary,hash_num: 1001))
+//        print(load_data(dict_hash_key: dictionary,hash_num: 1002))
+//        dictionary = delete_data(dict_hash_key: dictionary,hash_num: 1001)
+//        print(dictionary)
+ //       print(load_data(dict_hash_key: dictionary,hash_num: 1000))
         
         
-        print(dictionary)
+  //      print(dictionary)
     }
     
     func setupLocationManager() {
@@ -91,8 +95,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated:true)
-        var pin:[MKPointAnnotation] = pin
-        var element = MKPointAnnotation()
+        let pin:[MKPointAnnotation] = pin
+        let element = MKPointAnnotation()
         
         //let pin = MKPointAnnotation()
         element.title = text_title
@@ -171,7 +175,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
         for key_buf in key_data {
             let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
-            //addPin(latitude: map_y, longitude: map_x,pin: pin)
+            pin = addPin(latitude: map_y, longitude: map_x,pin: pin)
             dict_hash_key[id_hash] = key_buf
         }
         return dict_hash_key
