@@ -13,9 +13,12 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     
     @IBOutlet weak var mapView: MKMapView!
 
+    var pin: [MKPointAnnotation]=[]
     let locationManager = CLLocationManager()
     var val_x :Double = -122.38
     var val_y :Double = 37.77//37.76
+    var dinamic_x :Double = 0.0
+    var dinamic_y :Double = 0.0
     var text_title:String = "test"
     var text_subtitle:String = "test2"
     var id_hash : Int = 0
@@ -28,6 +31,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        
+        setupLocationManager()
         
         //UserDefaults.standard.removeAll()
         dictionary = init_load()
@@ -47,52 +52,69 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         print(dictionary)
     }
     
+    func setupLocationManager() {
+        //locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.distanceFilter = 10
+        locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
+        
+        locationManager.startUpdatingLocation()
+    }
+    
     @IBAction func touchpin(){
         print("touchPin")
         print(val_y)
         print(val_x)
-
-
-        addPin(latitude: val_y, longitude: val_x)
+        pin = addPin(latitude: val_y, longitude: val_x,pin: pin)
         
     }
     @IBAction func getcurrent(){
         locationManager.requestLocation()
         print("getcurrentlocation")
+        val_x = dinamic_x
+        val_y = dinamic_y
+        //data <------
+        print("Current")
         print(val_y)
         print(val_x)
+        print("-------")
         text_title = "aiueo"
         text_subtitle = "kakiku"
     }
     
     
     
-    func addPin(latitude: Double, longitude: Double) {
+    func addPin(latitude: Double, longitude: Double,pin: [MKPointAnnotation]) -> [MKPointAnnotation] {
         let coordinate = CLLocationCoordinate2DMake(latitude,longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated:true)
+        var pin:[MKPointAnnotation] = pin
+        var element = MKPointAnnotation()
         
-        let pin = MKPointAnnotation()
-        pin.title = text_title
-        pin.subtitle = text_subtitle
-        pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        print(pin.coordinate)
-        mapView.addAnnotation(pin)
-        id_hash = pin.hash
-        print(pin.hash)
+        //let pin = MKPointAnnotation()
+        element.title = text_title
+        element.subtitle = text_subtitle
+        element.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        //print(pin.coordinate)
+        mapView.addAnnotation(element)
+        id_hash = element.hash
+        print(element.hash)
+        return pin
 
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        
+
         guard let loc = locations.last else { return }
         //CurrentLocation = locations.first
-        val_x = loc.coordinate.longitude
-        val_y = loc.coordinate.latitude
+        dinamic_x = loc.coordinate.longitude
+        dinamic_y = loc.coordinate.latitude
         print("LocationManager")
-        print(val_y)
-        print(val_x)
+        print(dinamic_y)
+        print(dinamic_x)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
@@ -149,7 +171,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
         for key_buf in key_data {
             let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
-            addPin(latitude: map_y, longitude: map_x)
+            //addPin(latitude: map_y, longitude: map_x,pin: pin)
             dict_hash_key[id_hash] = key_buf
         }
         return dict_hash_key
