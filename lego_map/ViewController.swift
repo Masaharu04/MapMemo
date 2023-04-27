@@ -140,6 +140,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     }
     
 //------- user_default and ViewController--------
+/*-------------------userdefaultのデータを読み込みdictionaryを生成しピンを配置------------------
+ init_load() -> (dictionary[Int: String])
+ --------------------------------------------------------------------------------------*/
     
     func init_load() -> [Int: String]{
         var dict_hash_key: [Int: String] = [:]

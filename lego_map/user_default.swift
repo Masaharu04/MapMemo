@@ -5,24 +5,22 @@
 //  Created by Motoki on 2023/04/25.
 //
 
-/*-------------------------------------------------------------------------------------
- --------userdefaultにデータを保存する---------
- write_userdefault(マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String),keyword(String))
- --------userdefaultからデータを読み出す---------
- read_userdefault(keyword(String)) -> 戻り値(マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String))
- --------userdefaultからデータを消す---------
- delete_userdefault(keyword(String))
- --------------------------------------------------------------------------------------*/
 
 
 import Foundation
 
+/*----------------------------userdefaultにデータを保存する--------------------------------------
+write_userdefault(マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String),forkey(String))
+--------------------------------------------------------------------------------------------*/
 func write_userdefault(map_x: Double, map_y: Double, title: String!, text: String!, date: String, keyword: String){
     let savedata = [String(map_x), String(map_y), title, text, date]
     UserDefaults.standard.set(savedata, forKey: keyword)
     append_key(keyword: keyword)
 }
 
+/*---------------------------userdefaultからデータを読み出す--------------------------------
+read_userdefault(forkey(String)) -> (マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String))
+--------------------------------------------------------------------------------------*/
 func read_userdefault(keyword: String) -> (map_x: Double, map_y: Double, title: String, text: String, date: String){
     let readdata = UserDefaults.standard.stringArray(forKey: keyword) ?? ["","","E","E","E"]
     let arg1:Double = Double(readdata[0]) ?? 0
@@ -33,11 +31,18 @@ func read_userdefault(keyword: String) -> (map_x: Double, map_y: Double, title: 
         
     return (arg1,arg2,arg3,arg4,arg5)
 }
+
+/*-------------------------------userdefaultからデータを消す--------------------------------
+ delete_userdefault(forkey(String))
+ --------------------------------------------------------------------------------------*/
 func delete_userdefault(keyword: String){
     UserDefaults.standard.removeObject(forKey: keyword)
     delete_key(keyword: keyword)
 }
 
+/*--------------------------------forkeyをuserdefaultに追加-------------------------------
+ append_key(forkey(String))
+ --------------------------------------------------------------------------------------*/
 func append_key(keyword: String){
     var key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
     if key_data.contains(keyword){
@@ -47,17 +52,26 @@ func append_key(keyword: String){
     UserDefaults.standard.set(key_data, forKey: "key_keyword")
 }
 
+/*--------------------------------forkeyをuserdefaultから削除-------------------------------
+ delete_key(forkey(String))
+ ---------------------------------------------------------------------------------------*/
 func delete_key(keyword: String){
     var key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
     key_data.removeAll(where: {$0 == keyword})
     UserDefaults.standard.set(key_data, forKey: "key_keyword")
 }
 
+/*------------------------hashを使いdictionaryからforkeyを読み出す----------------------------
+ hash_to_keyword(hash(Int),dictionary([Int:String])) -> (forkey(String))
+ ---------------------------------------------------------------------------------------*/
 func hash_to_keyword(hash_num: Int, dict_hash_key: [Int: String]) -> String{
     let buf: String = dict_hash_key[hash_num] ?? ""
     return buf
 }
 
+/*---------------------------------------データを保存---------------------------------------
+ save_data(dictionary([Int:String]),hash(Int),マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String)) -> (dictionary([Int:String]))
+ ---------------------------------------------------------------------------------------*/
 func save_data(dict_hash_key: [Int: String], hash_num: Int,map_x: Double, map_y: Double, title: String!, text: String!, date: String) -> [Int: String]{
     var i: Int = 0
     var dict_hash_key: [Int: String] = dict_hash_key
@@ -70,12 +84,18 @@ func save_data(dict_hash_key: [Int: String], hash_num: Int,map_x: Double, map_y:
     return dict_hash_key
 }
 
+/*---------------------------------------データを読み込む------------------------------------
+ load_data(dictionary([Int: String]),hash(Int)) -> (マップのX座標(Double),マップのY座標(Double),タイトル(String),メモの内容(String),日付(String))
+ ---------------------------------------------------------------------------------------*/
 func load_data(dict_hash_key: [Int: String],hash_num: Int) -> (map_x: Double, map_y: Double, title: String, text: String, date: String){
     let keyword = hash_to_keyword(hash_num: hash_num, dict_hash_key: dict_hash_key)
     let (map_x, map_y, title, text, date) = read_userdefault(keyword: keyword)
     return (map_x, map_y, title, text, date)
 }
 
+/*---------------------------------------データを削除---------------------------------------
+ delete_data(dictionary([Int: String]),hash(Int)) -> dictionary([Int: String])
+ ---------------------------------------------------------------------------------------*/
 func delete_data(dict_hash_key: [Int: String],hash_num: Int) -> [Int: String]{
     var dict_hash_key: [Int: String] = dict_hash_key
     let keyword = hash_to_keyword(hash_num: hash_num, dict_hash_key: dict_hash_key)
