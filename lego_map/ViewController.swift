@@ -118,8 +118,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         dinamic_x = loc.coordinate.longitude
         dinamic_y = loc.coordinate.latitude
         print("LocationManager")
-        print(dinamic_y)
-        print(dinamic_x)
+//        print(dinamic_y)
+//        print(dinamic_x)
+        near_locate()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
@@ -155,7 +156,13 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         guard let annotation = view.annotation else {
             return
         }
-
+        
+        for i in 0 ..< pin.count{
+            //print(a[i].hash)
+            if pin[i].hash == annotation.hash{
+                pin.remove(at: i)
+            }
+        }
         self.mapView.removeAnnotation(annotation)
     }
     
@@ -183,6 +190,13 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             dict_hash_key[id_hash] = key_buf
         }
         return dict_hash_key
+    }
+    
+    func near_locate(){
+        print(pin.count)
+        for i in 0 ..< pin.count{
+            print(pin[i].hash)
+        }
     }
    
     
