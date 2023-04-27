@@ -18,13 +18,33 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     var text_title:String = "test"
     var text_subtitle:String = "test2"
     var id_hash : Int = 0
+    var dictionary: [Int: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapView.delegate = self
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        //UserDefaults.standard.removeAll()
+        dictionary = init_load()
+        
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "", text: "", date: "")
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1002,map_x: val_x+0.02, map_y: val_y, title: "", text: "", date: "")
+        print(dictionary)
+        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+        print(load_data(dict_hash_key: dictionary,hash_num: 1001))
+        print(load_data(dict_hash_key: dictionary,hash_num: 1002))
+        dictionary = delete_data(dict_hash_key: dictionary,hash_num: 1001)
+        print(dictionary)
+        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
+        
+        
+        print(dictionary)
         setupLocationManager()
-
     }
     
     func setupLocationManager() {
@@ -132,6 +152,30 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         self.mapView.removeAnnotation(annotation)
     }
     
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation{
+            print(annotation.title!!)
+            print(annotation.hash)
+        }
+    }
+    
+//------- user_default and ViewController--------
+/*-------------------userdefaultのデータを読み込みdictionaryを生成しピンを配置------------------
+ init_load() -> (dictionary[Int: String])
+ --------------------------------------------------------------------------------------*/
+    
+    func init_load() -> [Int: String]{
+        var dict_hash_key: [Int: String] = [:]
+        let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
+        for key_buf in key_data {
+            let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
+            addPin(latitude: map_y, longitude: map_x)
+            dict_hash_key[id_hash] = key_buf
+        }
+        return dict_hash_key
+    }
+   
     
     
 }
