@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , UITextFieldDelegate{
     
     let realm = try! Realm()
     
@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        titletextfield.delegate = self
+        contentTextField.delegate = self
         
         let memo: Memo? = read()
         
@@ -56,9 +58,15 @@ class ViewController: UIViewController {
                                                          message: "保存しました",
                                                          preferredStyle: .alert)
         alert.addAction(
-            UIAlertAction(title)
+            UIAlertAction(title: "OK", style: .default, handler: nil)
         )
         
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 
 
