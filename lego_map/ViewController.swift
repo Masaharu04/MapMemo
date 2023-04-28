@@ -23,7 +23,14 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     var text_subtitle:String = "test2"
     var id_hash : Int = 0
     var dictionary: [Int: String] = [:]
-    var near_data :[Double:Int] = [:]
+    var near_data :[Int:Double] = [:]
+    //button <-> pin.hash
+    var relate_pinbutton :[Int:UIButton] = [:]
+    //button表示
+ 
+    let screenwidth = UIScreen.main.bounds.width
+    let screenheight = UIScreen.main.bounds.height
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +42,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         
         setupLocationManager()
         
-        //UserDefaults.standard.removeAll()
+        UserDefaults.standard.removeAll()
         dictionary = init_load()
         
 //        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
@@ -44,8 +51,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         print(dictionary)
         print(read_userdefault(keyword: "0"))
         print(read_userdefault(keyword: "2"))
-        print(pin[0].coordinate.longitude)
-        print(pin[1])
+        //print(pin[0].coordinate.longitude)
+        //print(pin[1])
 //        print(load_data(dict_hash_key: dictionary,hash_num: 1000))
 //        print(load_data(dict_hash_key: dictionary,hash_num: 1001))
 //        print(load_data(dict_hash_key: dictionary,hash_num: 1002))
@@ -203,9 +210,20 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             //print(pin[i].coordinate.latitude)
             dst = distance(current: (la: dinamic_y,lo:dinamic_x), target: (la: pin[i].coordinate.latitude,lo: pin[i].coordinate.longitude))
             if dst <= near_range {
-                near_data.updateValue(pin[i].hash, forKey: dst)
-                print("近い")
-                
+                if !(near_data.keys.contains(pin[i].hash)){
+                    //distance(m) <-> pin.hash
+                    near_data.updateValue(Double(dst), forKey: Int(pin[i].hash))
+                    //pin.hash -> deta(title,subtitle,...)
+                    
+                    set_button(pin_hash: pin[i].hash)
+                    print("*")
+                }
+
+                //button_element <-> pin.hash
+                //relate_pinbutton.updateValue(,forKey: pin[i].hash)
+            }else{
+                remove_button(pin_hash : pin[i].hash)
+                //print(underButton.count)
             }
         }
     }
@@ -226,6 +244,44 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             let distance = equatorRadius * 2 * asin(sqrt(pow(sin(averageLat), 2) + cos(currentLa) * cos(targetLa) * pow(sin(averageLon), 2)))
             return distance
         }
+    
+    func set_button(pin_hash: Int){
+        var element = UIButton()
+        element.frame = CGRect(x: screenwidth*1/10, y: screenheight*1/5, width: screenwidth*8/10, height:screenheight*1/5)
+
+        // ボタンのタイトルを設定
+       element.setTitle(title, for:UIControl.State.normal)
+        element.titleLabel?.textAlignment = .center
+        //underButton.sizeToFit()
+
+        // タイトルの色
+        element.setTitleColor(UIColor.white, for: .normal)
+
+        // ボタンのフォントサイズ
+        element.titleLabel?.font =  UIFont.systemFont(ofSize: 36)
+        
+
+        // 背景色
+        element.backgroundColor = UIColor.red
+        
+        relate_pinbutton.updateValue(element, forKey: pin_hash)
+        // Viewにボタンを追加
+        view.addSubview(element)
+        
+        element.addTarget(self, action:#selector(print_a) , for: .touchUpInside)
+    }
+    func remove_button(pin_hash : Int){
+        var element:UIButton = relate_pinbutton[pin_hash] ?? UIButton()
+        //element = relate_pinbutton[pin_hash] ?? //-1
+       // if element != -1{
+        element.removeFromSuperview()
+            relate_pinbutton.removeValue(forKey: pin_hash)
+       // }
+    }
+    @objc func print_a(){
+        print("a")
+    }
+    
    
     
     
