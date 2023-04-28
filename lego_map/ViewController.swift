@@ -8,6 +8,7 @@
 import MapKit
 import UIKit
 import CoreLocation
+import UserNotifications
 
 class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDelegate{
     
@@ -42,11 +43,11 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         
         setupLocationManager()
         
-        UserDefaults.standard.removeAll()
+        //UserDefaults.standard.removeAll()
         dictionary = init_load()
         
-//        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "", text: "", date: "")
- //       dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "", text: "", date: "")
+        //dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "kkkk", text: "", date: "")
+        //dictionary = save_data(dict_hash_key: dictionary, hash_num: 1001,map_x: val_x+0.01, map_y: val_y, title: "rrrr", text: "", date: "")
 //        dictionary = save_data(dict_hash_key: dictionary, hash_num: 1002,map_x: val_x+0.02, map_y: val_y, title: "", text: "", date: "")
         print(dictionary)
         print(read_userdefault(keyword: "0"))
@@ -191,7 +192,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         var dict_hash_key: [Int: String] = [:]
         let key_data = UserDefaults.standard.stringArray(forKey: "key_keyword") ?? []
         for key_buf in key_data {
-            let (map_x,map_y,_,_,_) = read_userdefault(keyword: key_buf)
+            let (map_x,map_y,title,_,_) = read_userdefault(keyword: key_buf)
+            text_title = title
             pin = addPin(latitude: map_y, longitude: map_x,pin: pin)
             print("aaaaaaaaaaaaaaaaaaaaaaaaa")
             print(pin[0].coordinate.latitude)
@@ -217,11 +219,14 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
                     
                     set_button(pin_hash: pin[i].hash)
                     print("*")
+                    note()
+                    
                 }
 
                 //button_element <-> pin.hash
                 //relate_pinbutton.updateValue(,forKey: pin[i].hash)
             }else{
+                //note()
                 remove_button(pin_hash : pin[i].hash)
                 //print(underButton.count)
             }
@@ -270,6 +275,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         
         element.addTarget(self, action:#selector(print_a) , for: .touchUpInside)
     }
+    
     func remove_button(pin_hash : Int){
         var element:UIButton = relate_pinbutton[pin_hash] ?? UIButton()
         //element = relate_pinbutton[pin_hash] ?? //-1
@@ -280,6 +286,18 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     }
     @objc func print_a(){
         print("a")
+    }
+    
+    func note(){
+        let content = UNMutableNotificationContent()
+        content.title = "メモ発見！"
+        content.body = "メモを除いてみよう"
+        content.sound = UNNotificationSound.default
+        
+        // 直ぐに通知を表示
+        sleep(10)
+        let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
    
