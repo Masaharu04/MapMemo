@@ -87,6 +87,16 @@
                         <viewLayoutGuide key="safeArea" id="Ww9-HB-baJ"/>
                     </view>
                     <navigationItem key="navigationItem" id="M77-je-OAq">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="fWV-AK-k7p">
+                            <rect key="frame" x="159" y="5" width="75" height="34.333333333333336"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                            <connections>
+                                <action selector="listButton:" destination="qVD-Tu-aCF" eventType="touchDown" id="kMd-aO-Hp9"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="STt-tV-cdt">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="d0U-ZW-RLW">
                                 <rect key="frame" x="302" y="4.6666666666666679" width="75" height="35"/>
