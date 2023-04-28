@@ -137,9 +137,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
-        if annotation.title == "My Location"{
-            return nil
-        }
+//        if annotation.title == "My Location"{
+//            return nil
+//        }
         
 
         let pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
