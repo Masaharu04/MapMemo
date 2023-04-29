@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import UserNotifications
 
-class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDelegate{
+class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDelegate, SampleDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -22,6 +22,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     var dinamic_y :Double = 0.0
     var text_title:String = "test"
     var text_subtitle:String = "test2"
+    var contenttext: String = ""
     var id_hash : Int = 0
     var dictionary: [Int: String] = [:]
     var near_data :[Int:Double] = [:]
@@ -43,7 +44,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         
         setupLocationManager()
         
-        //UserDefaults.standard.removeAll()
+        UserDefaults.standard.removeAll()
         dictionary = init_load()
         
         //dictionary = save_data(dict_hash_key: dictionary, hash_num: 1000,map_x: val_x, map_y: val_y, title: "kkkk", text: "", date: "")
@@ -97,12 +98,24 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         text_subtitle = "kakiku"
     }
     
+    func save_prepare(){
+        let date = Date()
+        let st_date = date_to_string(date: date)
+        text_subtitle = st_date
+        print("aaaaaaaaaaaaaa")
+        print(val_x,val_y)
+        pin = addPin(latitude: val_y, longitude: val_x,pin: pin)
+        dictionary = save_data(dict_hash_key: dictionary, hash_num: id_hash, map_x: val_x, map_y: val_y, title: text_title, text: contenttext, date: text_subtitle)
+        
+    }
     
     
     func addPin(latitude: Double, longitude: Double,pin: [MKPointAnnotation]) -> [MKPointAnnotation] {
         let coordinate = CLLocationCoordinate2DMake(latitude,longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
+        print("iiiiiii")
+        print(region)
         mapView.setRegion(region, animated:true)
         var pin:[MKPointAnnotation] = pin
         var element = MKPointAnnotation()
@@ -127,8 +140,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         dinamic_x = loc.coordinate.longitude
         dinamic_y = loc.coordinate.latitude
         print("LocationManager")
-//        print(dinamic_y)
-//        print(dinamic_x)
+        print(dinamic_y)
+        print(dinamic_x)
         near_locate()
     }
     
@@ -219,7 +232,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
                     
                     set_button(pin_hash: pin[i].hash)
                     print("*")
-                    note()
+                    //note()
                     
                 }
 
@@ -252,7 +265,10 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     
     func set_button(pin_hash: Int){
         var element = UIButton()
-        element.frame = CGRect(x: screenwidth*1/10, y: screenheight*1/5, width: screenwidth*8/10, height:screenheight*1/5)
+        element.frame = CGRect(x: screenwidth*1/10, y: screenheight*4/5, width: screenwidth*8/10, height:screenheight*1/5)
+        
+        let picture = UIImage(named: "notebutton")
+        element.setImage(picture, for: .normal )
 
         // ボタンのタイトルを設定
        element.setTitle(title, for:UIControl.State.normal)
@@ -262,12 +278,14 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         // タイトルの色
         element.setTitleColor(UIColor.white, for: .normal)
 
+
         // ボタンのフォントサイズ
         element.titleLabel?.font =  UIFont.systemFont(ofSize: 36)
         
 
         // 背景色
-        element.backgroundColor = UIColor.red
+        //element.backgroundColor = UIColor.red
+
         
         relate_pinbutton.updateValue(element, forKey: pin_hash)
         // Viewにボタンを追加
@@ -295,10 +313,24 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         content.sound = UNNotificationSound.default
         
         // 直ぐに通知を表示
-        sleep(10)
+        //sleep(10)
         let request = UNNotificationRequest(identifier: "immediately", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
+    
+    @IBAction func to_EditPage(){
+        val_x = dinamic_x
+        val_y = dinamic_y
+        
+        
+        let map_viewcontroller = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = map_viewcontroller.instantiateViewController(withIdentifier: "text") as! EditViewController
+        nextVC.delegate = self
+        navigationController?.pushViewController(nextVC, animated: true)
+        
+        
+    }
+    
     
    
     

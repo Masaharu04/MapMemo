@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		729BDD7429FCC48A003E909F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729BDD7329FCC48A003E909F /* EditViewController.swift */; };
+		729BDD7629FCDBD8003E909F /* SaveDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729BDD7529FCDBD7003E909F /* SaveDelegate.swift */; };
 		943A523729F98A6C00667739 /* user_default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A523629F98A6C00667739 /* user_default.swift */; };
 		943A523929F98A8F00667739 /* set_day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A523829F98A8F00667739 /* set_day.swift */; };
 		94BE448429F69864009D6D2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE448329F69864009D6D2B /* AppDelegate.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		729BDD7329FCC48A003E909F /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		729BDD7529FCDBD7003E909F /* SaveDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDelegate.swift; sourceTree = "<group>"; };
 		943A523629F98A6C00667739 /* user_default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user_default.swift; sourceTree = "<group>"; };
 		943A523829F98A8F00667739 /* set_day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = set_day.swift; sourceTree = "<group>"; };
 		94BE448029F69864009D6D2B /* lego_map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lego_map.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				94BE448329F69864009D6D2B /* AppDelegate.swift */,
+				729BDD7529FCDBD7003E909F /* SaveDelegate.swift */,
 				94BE448529F69864009D6D2B /* SceneDelegate.swift */,
 				94BE448729F69864009D6D2B /* ViewController.swift */,
 				943A523629F98A6C00667739 /* user_default.swift */,
@@ -69,6 +74,7 @@
 				94BE448C29F69867009D6D2B /* Assets.xcassets */,
 				94BE448E29F69867009D6D2B /* LaunchScreen.storyboard */,
 				94BE449129F69867009D6D2B /* Info.plist */,
+				729BDD7329FCC48A003E909F /* EditViewController.swift */,
 			);
 			path = lego_map;
 			sourceTree = "<group>";
@@ -146,8 +152,10 @@
 			files = (
 				943A523729F98A6C00667739 /* user_default.swift in Sources */,
 				94BE448829F69864009D6D2B /* ViewController.swift in Sources */,
+				729BDD7429FCC48A003E909F /* EditViewController.swift in Sources */,
 				94BE448429F69864009D6D2B /* AppDelegate.swift in Sources */,
 				94BE448629F69864009D6D2B /* SceneDelegate.swift in Sources */,
+				729BDD7629FCDBD8003E909F /* SaveDelegate.swift in Sources */,
 				943A523929F98A8F00667739 /* set_day.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
