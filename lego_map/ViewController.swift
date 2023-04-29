@@ -43,6 +43,7 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         locationManager.requestWhenInUseAuthorization()
         
         setupLocationManager()
+        mapView.userTrackingMode = .follow
         
         UserDefaults.standard.removeAll()
         dictionary = init_load()
@@ -117,6 +118,8 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
         print("iiiiiii")
         print(region)
         mapView.setRegion(region, animated:true)
+        mapView.userTrackingMode = .follow
+
         var pin:[MKPointAnnotation] = pin
         var element = MKPointAnnotation()
         
@@ -151,9 +154,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
-//        if annotation.title == "My Location"{
-//            return nil
-//        }
+        if annotation.title == "My Location"{
+            return nil
+        }
         
 
         let pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
@@ -230,9 +233,9 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
                     near_data.updateValue(Double(dst), forKey: Int(pin[i].hash))
                     //pin.hash -> deta(title,subtitle,...)
                     
-                    set_button(pin_hash: pin[i].hash)
+                    set_button(pin_hash: pin[i].hash,title: "お気に入りの場所")
                     print("*")
-                    //note()
+                    note()
                     
                 }
 
@@ -263,17 +266,20 @@ class ViewController: UIViewController ,CLLocationManagerDelegate, MKMapViewDele
             return distance
         }
     
-    func set_button(pin_hash: Int){
+    func set_button(pin_hash: Int,title: String){
         var element = UIButton()
         element.frame = CGRect(x: screenwidth*1/10, y: screenheight*4/5, width: screenwidth*8/10, height:screenheight*1/5)
         
-        let picture = UIImage(named: "notebutton")
-        element.setImage(picture, for: .normal )
+
 
         // ボタンのタイトルを設定
+        
        element.setTitle(title, for:UIControl.State.normal)
         element.titleLabel?.textAlignment = .center
         //underButton.sizeToFit()
+        
+        let picture = UIImage(named: "notebutton")
+        element.setImage(picture, for: .normal )
 
         // タイトルの色
         element.setTitleColor(UIColor.white, for: .normal)
